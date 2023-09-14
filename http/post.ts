@@ -28,7 +28,10 @@ function doPost(e) {
         return resetUser();
       } else if (text.startsWith('[DELETE_')) {
         const userId = text.slice(1, -1).split('_')[1];
-        return deleteUser(userId);
+        const res = deleteUser(userId);
+        if (res) {
+          return;
+        }
       }
     }
 

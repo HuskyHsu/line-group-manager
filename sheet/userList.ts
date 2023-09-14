@@ -125,10 +125,11 @@ const deleteUser = (userId: string) => {
   const userIds = getUserList(false).flat();
   const userIndex = userIds.findIndex((id) => id === userId);
   if (userIndex < 0) {
-    return;
+    return false;
   }
 
   UserListSheet.deleteRow(userIndex + 2);
+  return true;
 };
 
 const updateAllUserInfo = () => {
