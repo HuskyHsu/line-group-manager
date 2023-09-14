@@ -27,7 +27,7 @@ const getUserRow = (userId: string) => {
   };
 };
 
-const addUser = (profile: Profile, message: string) => {
+const addUser = (profile: UserProfile, message: string) => {
   UserListSheet.appendRow([
     profile.userId,
     profile.displayName,

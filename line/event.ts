@@ -27,8 +27,16 @@ const processMemberLeft = (type, groupId, event) => {
   }
 };
 
+const processJoin = (type, groupId, event) => {
+  const group = getGroup(groupId);
+  const count = getGroupCount(groupId);
+
+  addGroup(group, count);
+};
+
 const eventMap = {
   message: processMessage,
+  join: processJoin,
   memberJoined: processMemberJoined,
   memberLeft: processMemberLeft,
 };

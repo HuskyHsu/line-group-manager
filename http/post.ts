@@ -1,5 +1,7 @@
 function doPost(e) {
   const requestContent = JSON.parse(e.postData.contents);
+  const cache = CacheService.getScriptCache();
+  const allowGroups = cache.get('groupList') || '';
 
   for (let event of requestContent.events) {
     if (event == null) {
@@ -12,6 +14,10 @@ function doPost(e) {
 
     const { type, groupId } = event.source;
     if (groupId === undefined) {
+      return ContentService.createTextOutput('success');
+    }
+
+    if (event.type !== 'join' && allowGroups.includes(groupId) === false) {
       return ContentService.createTextOutput('success');
     }
 

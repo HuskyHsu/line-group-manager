@@ -1,4 +1,4 @@
-type Profile = {
+type UserProfile = {
   displayName: string;
   userId: string;
   language: string;
@@ -6,7 +6,7 @@ type Profile = {
   statusMessage: string;
 };
 
-const getUser = (type, groupId, userId): Profile => {
+const getUser = (type, groupId, userId): UserProfile => {
   let url = 'https://api.line.me/v2/bot/';
   if (type === 'user') {
     url += `profile/${userId}`;
