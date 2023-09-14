@@ -25,10 +25,10 @@ function doPost(e) {
       const text = event.message.text;
 
       if (text === '[RESET_COUNT]') {
-        resetUser();
+        return resetUser();
       } else if (text.startsWith('[DELETE_')) {
         const userId = text.slice(1, -1).split('_')[1];
-        deleteUser(userId);
+        return deleteUser(userId);
       }
     }
 
