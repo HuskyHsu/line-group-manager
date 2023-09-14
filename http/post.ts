@@ -1,7 +1,13 @@
+function doGet(e) {
+  return ContentService.createTextOutput('success');
+}
+
 function doPost(e) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+
   const requestContent = JSON.parse(e.postData.contents);
-  const cache = CacheService.getScriptCache();
-  const allowGroups = cache.get('groupList') || '';
+  const allowGroups = getAllowGroup();
 
   for (let event of requestContent.events) {
     if (event == null) {
@@ -13,6 +19,19 @@ function doPost(e) {
     }
 
     const { type, groupId } = event.source;
+
+    // admin
+    if (event.type === 'message' && event.message.type === 'text') {
+      const text = event.message.text;
+
+      if (text === '[RESET_COUNT]') {
+        resetUser();
+      } else if (text.startsWith('[DELETE_')) {
+        const userId = text.slice(1, -1).split('_')[1];
+        deleteUser(userId);
+      }
+    }
+
     if (groupId === undefined) {
       return ContentService.createTextOutput('success');
     }
@@ -24,5 +43,6 @@ function doPost(e) {
     eventMap[event.type](type, groupId, event);
   }
 
+  lock.releaseLock();
   return ContentService.createTextOutput('success');
 }
