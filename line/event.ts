@@ -22,8 +22,8 @@ const processMemberJoined = (type, groupId, event) => {
 };
 
 const processMemberLeft = (type, groupId, event) => {
-  for (let member of event.joined.members) {
-    UpdateLastMsg(type, groupId, member.userId, '[memberLeft]');
+  for (let member of event.left.members) {
+    deleteUser(member.userId);
   }
 };
 

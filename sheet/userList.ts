@@ -143,5 +143,8 @@ const updateAllUserInfo = () => {
     updateUserInfo(index, userProfile);
   });
 
+  UserListSheet.sort(6, false);
+  clearUsers();
+
   lock.releaseLock();
 };
